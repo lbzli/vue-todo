@@ -44,7 +44,18 @@ const config = {
     }),
     new HTMLPlugin(),
     new VueLoaderPlugin()
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: "commons",
+          chunks: "initial",
+          minChunks: 2
+        }
+      }
+    }
+  },
 }
 
 if (isDev) {
@@ -100,13 +111,13 @@ if (isDev) {
     },
   )
   config.plugins.push(
-    new ExtractPlugin('styles.[contentHash:8].css'),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'runtime'
-    })
+    new ExtractPlugin('styles.[md5:contenthash:hex:8].css'),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor'
+    // }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'runtime'
+    // })
   )
 }
 
